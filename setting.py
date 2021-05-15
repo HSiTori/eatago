@@ -9,6 +9,9 @@ dic = {}
 store_name = ""
 flink = ""
 ulink = ""
+#3
+User_Dict = {'Annie' : '1_3_yyt47e7sDQvCmsPbUfJd4byJFt8p3favwgQUTjHA'}
+Current_User = ""
 
 def t(eng, chinese):
     return chinese if 'zh' in session_info.user_language else eng
@@ -24,3 +27,4 @@ def show_time():
         now_now = datetime.now()
         #put_text(now_now.year, now_now.month, now_now.day, now_now.hour, now_now.minute)
         return [now_now.year, now_now.month, now_now.day, now_now.hour, now_now.minute]
+

@@ -14,6 +14,11 @@ def choose_eat_type(name):
         clear_scope('eat_type')
         clear('BMI')
         eat_type = select('Choose your eatago:', ['我X麼是個正常人', '小朋友才吃健康食物', '明天腸胃科見'])
+        sheet_id = User_Dict[name]
+        sheet_url = 'https://gsx2json.com/api?id=' + sheet_id
+        resp = requests.get(sheet_url)
+
+
         if (eat_type == '我X麼是個正常人'):
             normal(name)
         elif (eat_type == '小朋友才吃健康食物'):
@@ -70,6 +75,7 @@ def whoAreYou():
         if name=='':
             #name = input("What is your name?", type=TEXT, placeholder='Annie', required=True)
             name = select('Who are you?', ['Annie', 'Anderson'])
+
         choose_eat_type(name)
         hold()
 
