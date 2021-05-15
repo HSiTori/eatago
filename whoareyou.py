@@ -5,7 +5,8 @@ from pywebio import start_server
 from pywebio.session import hold
 import asyncio
 
-scope_list = ['whoAreYou', 'normal', 'child', 'dead']
+scope_list = ['whoAreYou', 'eat_type', 'normal', 'child', 'dead']
+name = ''
 
 def clear_scope(current):
     for scope in scope_list:
@@ -19,6 +20,17 @@ def search_food(mode):
         'dead': lambda mode: input('What do you want?', type=TEXT, placeholder='香雞排', required=True)
     }[mode](mode)
     return food
+
+def choose_eat_type(name):
+    with use_scope('eat_type', if_exist = 'remove'):
+        clear_scope('eat_type')
+        eat_type = select('Choose your eatago:', ['我X麼是個正常人', '小朋友才吃健康食物', '明天腸胃科見'])
+        if (eat_type == '我X麼是個正常人'):
+            normal(name)
+        elif (eat_type == '小朋友才吃健康食物'):
+            child(name)
+        else:
+            dead(name)
 
 
 def normal(name):
@@ -53,20 +65,13 @@ def dead(name):
 
 def whoAreYou():
     with use_scope('whoAreYou', if_exist='remove'):
-        #img = open('eatago_logo.jpg', 'rb').read()
-        #style(put_image(img, width='150px'), 'display: flex' 'justify-content: center')
-        name = input("What is your name?", type=TEXT, placeholder='Annie', required=True)
-        eat_type = select('Choose your eatago:', ['我X麼是個正常人', '小朋友才吃健康食物', '明天腸胃科見'])
-
-        if(eat_type == '我X麼是個正常人'):
-            normal(name)
-        elif(eat_type == '小朋友才吃健康食物'):
-            child(name)
-        else:
-            dead(name)
-
-        put_text('Hello %s' % name)
-        hold()
+        global name
+        img = open('eatago_logo.jpg', 'rb').read()
+        style(put_image(img, width='300px'), 'display: flex' 'justify-content: center')
+        if name=='':
+            name = input("What is your name?", type=TEXT, placeholder='Annie', required=True)
+        choose_eat_type(name)
+        #hold()
         # put_image()
 
 
