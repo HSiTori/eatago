@@ -53,8 +53,8 @@ def dead(name):
 
 def whoAreYou():
     with use_scope('whoAreYou', if_exist='remove'):
-        img = open('eatago_logo.jpg', 'rb').read()
-        style(put_image(img, width='150px'), 'display: flex' 'justify-content: center')
+        #img = open('eatago_logo.jpg', 'rb').read()
+        #style(put_image(img, width='150px'), 'display: flex' 'justify-content: center')
         name = input("What is your name?", type=TEXT, placeholder='Annie', required=True)
         eat_type = select('Choose your eatago:', ['我X麼是個正常人', '小朋友才吃健康食物', '明天腸胃科見'])
 
