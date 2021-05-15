@@ -1,4 +1,5 @@
 from import_lib import *
+from tqdm import *
 
 def to_menu(choice,id):
     l = id.split("/")
@@ -7,7 +8,15 @@ def to_menu(choice,id):
 
 
 def store_page():
-    with use_scope("store",if_exist = "remove"):
+    with tqdm(total=100) as pbar:
+        put_processbar('bar', auto_close=True)
+        for i in range(10):
+            pbar.update(10)
+            time.sleep(0.3)
+            with use_scope('bar', if_exist = 'remove'):
+                set_processbar('bar', pbar.n/pbar.total)
+    with use_scope("store", if_exist = "remove"):
+        clear_scope('store')
         sheet_id = "1HVFC318_8JaPQDG6qNIH2gbpd9jyhP6yKwE-oCed53A"
         #sheet_id = "1HVFC318_8JaPQDG6qNIH2gbpd9jyhP6yKwE-oCed53A"
         sheet_url = 'https://gsx2json.com/api?id=' + sheet_id
@@ -77,7 +86,7 @@ def cart():
 
 
 def pop_up_page(choice, id):
-    num = textarea(rows = 1, label = "數量",type = NUMBER)
+    num = input(rows = 1, label = "數量",type = NUMBER)
     #popup(id, [put_text("數量:"),put_text(num)], size=PopupSize.SMALL)
 
     if id not in order:

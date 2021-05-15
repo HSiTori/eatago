@@ -34,7 +34,7 @@ def child(name):
         clear_scope('child')
         put_text('一天eatago，醫生遠離我')
         put_buttons(['重新搜尋'], onclick=[whoAreYou])
-        food = search_food('child')
+        store_page()
         hold()
 
 def dead(name):
@@ -42,7 +42,7 @@ def dead(name):
         clear_scope('dead')
         put_text('今天吃大餐，明天領藥單')
         put_buttons(['重新搜尋'], onclick=[whoAreYou])
-        food = search_food('dead')
+        store_page()
         hold()
 
 

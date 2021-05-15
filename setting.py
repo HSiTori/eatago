@@ -1,6 +1,6 @@
 from import_lib import *
 
-scope_list = ['whoAreYou', 'eat_type', 'normal', 'child', 'dead', 'BMI', 'time', 'cart','store']
+scope_list = ['whoAreYou', 'eat_type', 'normal', 'child', 'dead', 'BMI', 'time', 'cart','store', 'bar']
 name = ''
 
 def t(eng, chinese):

@@ -19,3 +19,6 @@ from setting import *
 from BMI import *
 from whoAreYou import *
 from menu import *
+
+# tqdm
+from tqdm import *
