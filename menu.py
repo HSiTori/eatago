@@ -6,6 +6,8 @@ def to_menu(choice,id):
     print(l[5])
     menu_page(choice,l[5])
 
+def to_store():
+    store_page()
 
 def store_page():
     with tqdm(total=100) as pbar:
@@ -15,9 +17,12 @@ def store_page():
             time.sleep(0.3)
             with use_scope('bar', if_exist = 'remove'):
                 set_processbar('bar', pbar.n/pbar.total)
-    with use_scope("store", if_exist = "remove"):
+    with use_scope("store", if_exist="remove"):
         clear_scope('store')
-        sheet_id = "1HVFC318_8JaPQDG6qNIH2gbpd9jyhP6yKwE-oCed53A"
+        clear('cart')
+        clear('menu')
+        sheet_id = "1HVFC318_8JaPQDG6qNIH2gbpd9jyhP6yKwE-oCed53A" ##
+        ##
         #sheet_id = "1HVFC318_8JaPQDG6qNIH2gbpd9jyhP6yKwE-oCed53A"
         sheet_url = 'https://gsx2json.com/api?id=' + sheet_id
         resp = requests.get(sheet_url)
@@ -32,12 +37,19 @@ def store_page():
         hold()
 
 
-order = {}
-dic = {}
+
 
 def delete(choice,id):
     order.pop(id)
     cart()
+
+def record():
+    #https://docs.google.com/forms/d/e/1FAIpQLSfEfntFlruSOVX9Z56eJr7jQrWEKISFQVuDAs-OaixxOOyu0Q/viewform?usp=pp_url&entry.1577758997=time&entry.2103521038=store&entry.887967252=menu
+    time = "2021/5/16"
+    data = {"entry.1577758997": time , "entry.2103521038": store_name , "entry.887967252": order}
+    if len(order)  != 0:
+        requests.get(
+            "https://docs.google.com/forms/d/e/1FAIpQLSfEfntFlruSOVX9Z56eJr7jQrWEKISFQVuDAs-OaixxOOyu0Q/formResponse",data)
 
 def cart():
     with use_scope("cart", if_exist = "remove"):
@@ -98,14 +110,18 @@ def pop_up_page(choice, id):
 
 
 def menu_page(name , sheet_id):#sheet_id):
-    with use_scope("menu",if_exist = "remove"):
-        clear_scope('menu')
+    with use_scope('menu',if_exist = "remove"):
+        clear('store')
+        global order
+        global dic
+        order = {}
+        dic = {}
+        put_buttons([dict(label='<',value = 'p', color='info')], onclick = [to_store] )
         put_text(name)
         #sheet_id="19dJIc0j0qfHvdgZEBOZHNe5OPX53nGmVslf1uIP-hfY"
         sheet_url = 'https://gsx2json.com/api?id='+sheet_id
         resp = requests.get(sheet_url)
-
-
+        print(resp)
         for row in json.loads(resp.text)['rows']:
             name = row['foodpanda']
             price = row['fprice']
@@ -114,7 +130,6 @@ def menu_page(name , sheet_id):#sheet_id):
                     dic[name][0] = price
                 else:
                     dic[name] = [price,0]
-
             name = row['ubereats']
             price = row['uprice']
 

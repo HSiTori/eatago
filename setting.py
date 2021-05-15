@@ -1,7 +1,14 @@
 from import_lib import *
 
-scope_list = ['whoAreYou', 'eat_type', 'normal', 'child', 'dead', 'BMI', 'time', 'cart','store', 'bar']
+scope_list = ['whoAreYou', 'eat_type', 'normal', 'child', 'dead', 'BMI', 'time', 'cart', 'store', 'bar', 'menu']
 name = ''
+# 1
+order = {}
+dic = {}
+# 2
+store_name = ""
+flink = ""
+ulink = ""
 
 def t(eng, chinese):
     return chinese if 'zh' in session_info.user_language else eng

@@ -12,6 +12,7 @@ def search_food(mode):
 def choose_eat_type(name):
     with use_scope('eat_type', if_exist='remove'):
         clear_scope('eat_type')
+        clear('BMI')
         eat_type = select('Choose your eatago:', ['我X麼是個正常人', '小朋友才吃健康食物', '明天腸胃科見'])
         if (eat_type == '我X麼是個正常人'):
             normal(name)
@@ -64,10 +65,11 @@ def whoAreYou():
         else:
             put_text('It is dinner time')
         # button to BMI
-        put_buttons(['press here to BMI calculation'], onclick=[BMI])
+        #put_buttons(['press here to BMI calculation'], onclick=[BMI])
 
         if name=='':
-            name = input("What is your name?", type=TEXT, placeholder='Annie', required=True)
+            #name = input("What is your name?", type=TEXT, placeholder='Annie', required=True)
+            name = select('Who are you?', ['Annie', 'Anderson'])
         choose_eat_type(name)
         hold()
 
