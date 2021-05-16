@@ -90,11 +90,11 @@ def choose_eat_type():
                 if row['store'] in fried_list:
                     fried_cnt += 1
 
-                print(row['time'])
+                #print(row['time'])
                 time = row['time'].split(" ")
-                print(time)
+                #print(time)
                 time = time[1].split(":")
-                print(time)
+                #print(time)
                 time = int(time[0])
                 if (time >= 23) or (time <= 3):
                     night_cnt += 1
@@ -132,7 +132,7 @@ def normal():
         global Mode
         Mode = Mode*3 + 0
         Id = store_id [Mode]
-        print(Mode)
+        #print(Mode)
         store_page(Id, Current_User)
         hold()
 
@@ -147,7 +147,7 @@ def child():
         global Mode
         Mode = Mode * 3 + 1
         Id = store_id[Mode]
-        print(Mode)
+        #print(Mode)
         store_page(Id, Current_User)
         hold()
 
@@ -162,7 +162,7 @@ def dead():
         global Mode
         Mode = Mode * 3 + 2
         Id = store_id[Mode]
-        print(Mode)
+        #print(Mode)
         store_page(Id,Current_User)
         hold()
 
@@ -183,7 +183,7 @@ def whoAreYou():
         if time_list[3] < 11:
             a = put_text('Breakfast time!')
             Mode = 0
-        elif time_list[3] > 10 and time_list[3] < 10:
+        elif time_list[3] > 10 and time_list[3] < 17:
             a = put_text('Lunch time!')
             Mode = 1
         else:
@@ -206,7 +206,7 @@ def whoAreYou():
 
         global Current_User
         Current_User = name
-        print(Current_User)
+        #print(Current_User)
         clear('pic')
         choose_eat_type()
         hold()
