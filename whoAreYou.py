@@ -174,20 +174,20 @@ def whoAreYou():
         time_list = show_time()
         # choose time period
         global Mode
-        if time_list[3] < 12:
+        if time_list[3] < 11:
             a = put_text('Breakfast time!')
             Mode = 0
-        elif time_list[3] > 12 and time_list[3] < 18:
-            a = put_text('Lunch time')
+        elif time_list[3] > 10 and time_list[3] < 17:
+            a = put_text('Lunch time!')
             Mode = 1
         else:
-            a = put_text('Dinner time')
+            a = put_text('Dinner time!')
             Mode = 2
 
         put_row([
             style(put_image(img, width='2000px'), 'display: flex' 'justify-content: center;'), put_column([
             style(put_text(time_list[0], "/", time_list[1], "/", time_list[2], " ", time_list[3], " : ",
-                     time_list[4]),'font-size:0.6cm; position:relative; left:70px; top: 90px; text-indent: 150px; font-weight:500;'),
+                     time_list[4]),'font-size:0.6cm; position:relative; left:60px; top: 90px; text-indent: 150px; font-weight:500;'),
             style(a,'font-size:1.25cm; position:relative; position:relative; left:10px;  text-indent:150px; font-weight:700; color:MidnightBlue')])
         ])
 
