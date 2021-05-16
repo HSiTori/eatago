@@ -128,6 +128,7 @@ def cart():
                 put_link("或是當個盤子?  ", url=ulink, new_window=True)
             elif f_total > u_total:
                 put_link("Ubereats 比較讚啦 (點我前往)", url=ulink, new_window=True)
+                put_text('')
                 style(put_text("Eatago 幫你省了", inline=True),
                       'font-size:0.5cm; font-weight:500; color:MidnightBlue')
                 style(put_text(str(f_total - u_total) + "元", inline=True),

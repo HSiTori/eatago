@@ -114,7 +114,7 @@ def choose_eat_type():
             if fried_cnt > 2:
                 style(put_text("好油喔 peko"), 'color:red; font-size:0.7cm; font-weight:400;')
 
-        eat_type = select('Choose your eatago , 今天想要怎麼吃?', ['我X麼是個正常人(正常吃飯)', '小朋友才吃健康食物(健康生活)', '明天腸胃科見(暴飲暴食)'])
+        eat_type = select('Choose Your Eatago , 今天想要怎麼吃?', ['我X麼是個正常人(正常吃飯)', '小朋友才吃健康食物(健康生活)', '明天腸胃科見(暴飲暴食)'])
         if (eat_type == '我X麼是個正常人(正常吃飯)'):
             normal()
         elif (eat_type == '小朋友才吃健康食物(健康生活)'):
@@ -127,32 +127,38 @@ def normal():
     with use_scope('normal', if_exist='remove'):
         clear_scope('normal')
         put_row([style(put_text('今天吃了沒～？'),'border-top-style:solid; font-size:0.5cm; font-weight:400; padding-top:15px; padding-right: 30px'),
-                 style(put_buttons(['重新搜尋'], onclick=[whoAreYou]),'border-top-style:solid; position:relative; right:50px; padding-top:15px; padding-right:20px;')
+                 style(put_buttons(['重新搜尋'], onclick=[whoAreYou]),'border-top-style:solid; position:relative; right:0px; padding-top:15px; padding-right:0px; padding-left:17px;')
                  ])
         global Mode
         Mode = Mode*3 + 0
         Id = store_id [Mode]
         print(Mode)
-        store_page(Id,Current_User)
+        store_page(Id, Current_User)
         hold()
 
 def child():
     with use_scope('child', if_exist='remove'):
         clear_scope('child')
-        put_text('一天eatago，醫生遠離我')
-        put_buttons(['重新搜尋'], onclick=[whoAreYou])
+        put_row([style(put_text('一天Eatago，醫生遠離我'),
+                       'border-top-style:solid; font-size:0.5cm; font-weight:400; padding-top:15px; padding-right: 30px'),
+                 style(put_buttons(['重新搜尋'], onclick=[whoAreYou]),
+                       'border-top-style:solid; position:relative; right:0px; padding-top:15px; padding-right:0px; padding-left:17px;')
+                 ])
         global Mode
         Mode = Mode * 3 + 1
         Id = store_id[Mode]
         print(Mode)
-        store_page(Id,Current_User)
+        store_page(Id, Current_User)
         hold()
 
 def dead():
     with use_scope('dead', if_exist = 'remove'):
         clear_scope('dead')
-        put_text('今天吃大餐，明天領藥單')
-        put_buttons(['重新搜尋'], onclick=[whoAreYou])
+        put_row([style(put_text('今天吃大餐，明天領藥單'),
+                       'border-top-style:solid; font-size:0.5cm; font-weight:400; padding-top:15px; padding-right: 30px'),
+                 style(put_buttons(['重新搜尋'], onclick=[whoAreYou]),
+                       'border-top-style:solid; position:relative; right:0px; padding-top:15px; padding-right:0px; padding-left:17px;')
+                 ])
         global Mode
         Mode = Mode * 3 + 2
         Id = store_id[Mode]
@@ -177,7 +183,7 @@ def whoAreYou():
         if time_list[3] < 11:
             a = put_text('Breakfast time!')
             Mode = 0
-        elif time_list[3] > 10 and time_list[3] < 17:
+        elif time_list[3] > 10 and time_list[3] < 10:
             a = put_text('Lunch time!')
             Mode = 1
         else:
