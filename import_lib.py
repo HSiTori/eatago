@@ -16,7 +16,6 @@ from functools import partial
 
 # all .py import
 from setting import *
-from BMI import *
 from whoAreYou import *
 from menu import *
 

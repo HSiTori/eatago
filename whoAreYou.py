@@ -191,15 +191,17 @@ def whoAreYou():
             style(a,'font-size:1.25cm; position:relative; position:relative; left:10px;  text-indent:150px; font-weight:700; color:MidnightBlue')])
         ])
 
-        put_row([style(put_image(img_h, width='2000px'), 'display: flex' 'justify-content: center;'),
-                 style(put_image(img_b, width='2000px'), 'display: flex' 'justify-content: center;')])
+        with use_scope('pic', clear=True):
+            put_row([style(put_image(img_h, width='2000px'), 'display: flex' 'justify-content: center;'),
+                    style(put_image(img_b, width='2000px'), 'display: flex' 'justify-content: center;')])
 
         if name == '':
-            name = select('Who are you?', ['Annie', 'Anderson'])
+                    name = select('Who are you?', ['Annie', 'Anderson'])
 
         global Current_User
         Current_User = name
         print(Current_User)
+        clear('pic')
         choose_eat_type()
         hold()
 
