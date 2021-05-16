@@ -1,6 +1,8 @@
 from import_lib import *
 from tqdm import *
 
+Name = ""
+Id = 0
 def to_menu(choice,id):
     l = id[0].split("/")
     #print(l[5])
@@ -13,9 +15,13 @@ def to_menu(choice,id):
     menu_page(choice,l[5])
 
 def to_store():
-    store_page()
+    store_page(Id , Name)
 
-def store_page():
+def store_page(sheet_id , name):
+    global  Name
+    global Id
+    Id = sheet_id
+    Name = name
     with tqdm(total=100) as pbar:
         put_processbar('bar', auto_close=True)
         for i in range(10):
@@ -26,17 +32,14 @@ def store_page():
     with use_scope("store",if_exist = "remove"):
         clear('cart')
         clear('menu')
-        #img = open('eatago_logo.jpg', 'rb').read()
-        #style(put_image(img, width='300px'), 'display: flex' 'justify-content: center')
-        sheet_id = "12QmcwqcZWo6wjV8d1K3_NP7WVjaW-ckwkRea9W56I0I"
         sheet_url = 'https://gsx2json.com/api?id=' + sheet_id
         resp = requests.get(sheet_url)
         print(resp)
         lst = [["店名", "照片", "菜單"]]
 
         for row in json.loads(resp.text)['rows']:
-            #put_image(row['picurl'], width="300px")
-            t = [ row['name'] , put_image(row['picurl'], width="150px") , put_buttons( [dict(label="看菜單",value = row['name'], color = 'info')] , onclick = partial( to_menu, id = (row['menu'],row['flink'],row['ulink'])))]
+            #t = [ row['name'] , put_image(row['picurl'], width="150px") , put_buttons( [dict(label="看菜單",value = row['name'], color = 'info')] , onclick = partial( to_menu, id = (row['menu'],row['flink'],row['ulink'])))]
+            t = [row['name'], "" ,put_buttons([dict(label="看菜單", value=row['name'], color='info')],onclick=partial(to_menu, id=(row['menu'], row['flink'], row['ulink'])))]
             lst.append(t)
         put_table(lst)
         hold()
@@ -47,15 +50,27 @@ def delete(choice,id):
     cart()
 
 def record():
-    #https://docs.google.com/forms/d/e/1FAIpQLSfEfntFlruSOVX9Z56eJr7jQrWEKISFQVuDAs-OaixxOOyu0Q/viewform?usp=pp_url&entry.1577758997=time&entry.2103521038=store&entry.887967252=menu
-    time = "2021/5/16"
-    data = {"entry.1577758997": time , "entry.2103521038": store_name , "entry.887967252": order}
-    if len(order)  != 0:
-        requests.get(
-            "https://docs.google.com/forms/d/e/1FAIpQLSfEfntFlruSOVX9Z56eJr7jQrWEKISFQVuDAs-OaixxOOyu0Q/formResponse",data)
+    global Name
+    now = datetime.now()
+    time = str(now.year) + "-" + str(now.month) + "-" + str(now.day) + " " + str(now.hour) + ":" +  str(now.minute)
+    print(Name)
+    if Name == "Annie":
+        #https://docs.google.com/forms/d/e/1FAIpQLSfEfntFlruSOVX9Z56eJr7jQrWEKISFQVuDAs-OaixxOOyu0Q/viewform?usp=pp_url&entry.1033381325=url&entry.1577758997=time&entry.2103521038=store&entry.887967252=menu
+        data = {"entry.1577758997": time , "entry.2103521038": store_name , "entry.887967252": order,"entry.1033381325" : Id}
+        if len(order)  != 0:
+            requests.get("https://docs.google.com/forms/d/e/1FAIpQLSfEfntFlruSOVX9Z56eJr7jQrWEKISFQVuDAs-OaixxOOyu0Q/formResponse",data)
+    else :
+        # https://docs.google.com/forms/d/e/1FAIpQLSfwShv8t4PjIcuPJWo5AEDbCCuskVRDYPps4XL_5CzG28dgJg/viewform?usp=pp_url&entry.1040772690=time&entry.1247007904=store&entry.1175688414=menu
+        data = {"entry.1040772690": time, "entry.1247007904": store_name, "entry.1175688414": order}
+        if len(order) != 0:
+            requests.get("https://docs.google.com/forms/d/e/1FAIpQLSfwShv8t4PjIcuPJWo5AEDbCCuskVRDYPps4XL_5CzG28dgJg/formResponse",data)
+    popup('', '已記錄', size=PopupSize.SMALL)
+
 
 def cart():
     with use_scope("cart", if_exist = "remove"):
+        global flink
+        global ulink
         lst = [["","品項","數量","foodpanda","Ubereats"]]
         f_total = 0
         u_total = 0
@@ -77,7 +92,8 @@ def cart():
                 u_total = u_total + u
             l = [put_buttons([dict(label="刪除",value = 'p', color='danger')], onclick=partial(delete, id = i)),i,order[i],f,u]
             lst.append(l)
-        l = [put_buttons([dict(label="紀錄",value = 'p', color='success')] , onclick = [record]),"總價","",f_total,u_total]
+
+        l = [put_buttons([dict(label="紀錄",value = 'p', color='success')] , onclick = [record] ),"總價","",f_total,u_total]
         lst.append(l)
         put_table(lst)
         if f_flag and u_flag:
@@ -93,17 +109,23 @@ def cart():
             put_text("Foodpanda 比較便宜")
         else:
             if f_total < u_total:
-                put_text("Foodpanda 比較便宜")
+                put_link("Foodpanda 比較便宜 (點我前往) ", url=flink, new_window=True)
+                put_text("Eatago 幫你省了" + str(u_total - f_total)+"元")
+                put_link("或是當個盤子?  ", url=ulink, new_window=True)
             elif f_total > u_total:
-                put_text("Ubereats 比較讚啦")
+                put_link("Ubereats 比較讚啦 (點我前往)", url=ulink, new_window=True)
+                put_text("Eatago 幫你省了" + str(f_total - u_total)+"元")
+                put_link("或是當個盤子?  ", url=flink, new_window=True)
             else:
                 put_text("兩個一樣 擇其所望")
+                put_link("前往 Foodpanda " , url = flink , new_window = True)
+                put_text("")
+                put_link("前往 Ubereats " , url = ulink , new_window = True)
 
-        global flink
-        global ulink
-        put_link("To Foodpanda " , url = flink , new_window = True)
-        put_text("")
-        put_link("To Ubereats " , url = ulink , new_window = True)
+
+        #put_link("To Foodpanda " , url = flink , new_window = True)
+        #put_text("")
+        #put_link("To Ubereats " , url = ulink , new_window = True)
 
 
 def pop_up_page(choice, id):
@@ -131,14 +153,14 @@ def menu_page( name , sheet_id ): #sheet_id
         print(resp)
         for row in json.loads(resp.text)['rows']:
             name = row['foodpanda']
-            price = row['fprice']
+            price = int(row['fprice'])
             if (str(name) != "0"):
                 if name in dic:
                     dic[name][0] = price
                 else:
                     dic[name] = [price,0]
             name = row['ubereats']
-            price = row['uprice']
+            price = int(row['uprice'])
 
             if (str(name) != "0"):
                 if name in dic:
