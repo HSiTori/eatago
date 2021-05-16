@@ -49,14 +49,11 @@ def search_food(mode):
 def choose_eat_type():
     with use_scope('eat_type', if_exist='remove'):
         clear_scope('eat_type')
-        clear('BMI')
-
         sheet_id = User_Dict[Current_User]
-
         sheet_url = 'https://gsx2json.com/api?id=' + sheet_id
         resp = requests.get(sheet_url)
         print(resp)
-        put_text(str(Current_User) + " 的近期紀錄")
+        style(put_text(str(Current_User) + " 的近期紀錄"),'font-size:0.5cm; font-weight:500')
         lst = [["時間","店名","餐點"]]
         length = len(json.loads(resp.text)['rows'])
 
@@ -105,22 +102,22 @@ def choose_eat_type():
                 lst.append(l)
         put_table(lst)
 
-        put_text("你最近點了 " + str(drink_cnt) + "次飲料 , " + str(night_cnt) + "次宵夜 , " + str(fried_cnt) +"次炸物")
+        style(put_text("你最近點了 " + str(drink_cnt) + "次飲料 , " + str(night_cnt) + "次宵夜 , " + str(fried_cnt) +"次炸物"),'font-size:0.5cm; font-weight:400; color:blue;')
 
         if drink_cnt <= 2 and night_cnt <= 2 and fried_cnt <= 2:
-            put_text("你很健康")
+            style(put_text("你很健康"), 'color:green; font-size:0.7cm; font-weight:400;')
         else:
             if drink_cnt > 2:
-                put_text("喝太多飲料了")
+                style(put_text("喝太多飲料了"), 'color:red; font-size:0.7cm; font-weight:400;')
             if night_cnt > 2:
-                put_text("別再熬夜了")
+                style(put_text("別再熬夜了"), 'color:red; font-size:0.7cm; font-weight:400;')
             if fried_cnt > 2:
-                put_text("好油喔 peko")
+                style(put_text("好油喔 peko"), 'color:red; font-size:0.7cm; font-weight:400;')
 
         eat_type = select('Choose your eatago , 今天想要怎麼吃?', ['我X麼是個正常人(正常吃飯)', '小朋友才吃健康食物(健康生活)', '明天腸胃科見(暴飲暴食)'])
-        if (eat_type == '我X麼是個正常人'):
+        if (eat_type == '我X麼是個正常人(正常吃飯)'):
             normal()
-        elif (eat_type == '小朋友才吃健康食物'):
+        elif (eat_type == '小朋友才吃健康食物(健康生活)'):
             child()
         else:
             dead()
@@ -129,8 +126,9 @@ def choose_eat_type():
 def normal():
     with use_scope('normal', if_exist='remove'):
         clear_scope('normal')
-        put_text('今天吃了沒～？')
-        put_buttons(['重新搜尋'], onclick=[whoAreYou])
+        put_row([style(put_text('今天吃了沒～？'),'border-top-style:solid; font-size:0.5cm; font-weight:400; padding-top:15px; padding-right: 30px'),
+                 style(put_buttons(['重新搜尋'], onclick=[whoAreYou]),'border-top-style:solid; position:relative; right:50px; padding-top:15px; padding-right:20px;')
+                 ])
         global Mode
         Mode = Mode*3 + 0
         Id = store_id [Mode]
@@ -171,28 +169,34 @@ def whoAreYou():
         clear("cart")
         global name
         img = open('eatago_logo.jpg', 'rb').read()
-        style(put_image(img, width='300px'), 'display: flex' 'justify-content: center')
-
-        # show time
+        img_b = open('food_botton.jpg', 'rb').read()
+        img_h = open('hungry_me.jpg', 'rb').read()
         time_list = show_time()
-        put_text('Current time: ', time_list[0],"/", time_list[1], "/", time_list[2], "  ", time_list[3], " : ", time_list[4])
         # choose time period
         global Mode
         if time_list[3] < 12:
-            put_text('It is breakfast time!')
+            a = put_text('Breakfast time!')
             Mode = 0
         elif time_list[3] > 12 and time_list[3] < 18:
-            put_text('It is lunch time')
+            a = put_text('Lunch time')
             Mode = 1
         else:
-            put_text('It is dinner time')
+            a = put_text('Dinner time')
             Mode = 2
-        # button to BMI
-        #put_buttons(['press here to BMI calculation'], onclick=[BMI])
 
-        if name=='':
-            #name = input("What is your name?", type=TEXT, placeholder='Annie', required=True)
+        put_row([
+            style(put_image(img, width='2000px'), 'display: flex' 'justify-content: center;'), put_column([
+            style(put_text(time_list[0], "/", time_list[1], "/", time_list[2], " ", time_list[3], " : ",
+                     time_list[4]),'font-size:0.6cm; position:relative; left:70px; top: 90px; text-indent: 150px; font-weight:500;'),
+            style(a,'font-size:1.25cm; position:relative; position:relative; left:10px;  text-indent:150px; font-weight:700; color:MidnightBlue')])
+        ])
+
+        put_row([style(put_image(img_h, width='2000px'), 'display: flex' 'justify-content: center;'),
+                 style(put_image(img_b, width='2000px'), 'display: flex' 'justify-content: center;')])
+
+        if name == '':
             name = select('Who are you?', ['Annie', 'Anderson'])
+
         global Current_User
         Current_User = name
         print(Current_User)
