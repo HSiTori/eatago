@@ -59,6 +59,9 @@ It will then enables Eatago notify us whether we are on a healthy diet.
 &#160; &#160; &#160; &#160;An extra system about delivering time will be found to lessen the waiting time or our staving time. The system will record when we order food everyday and infer the time we will be hungry, notifying us to order in advance. If we forget to order earlier, the system will also find and show the store that can offer food the fastest and the delivering time is the shortest. With the system mentioned, we can be free from starving.
 ###    4. Andvanced Group Order
 &#160; &#160; &#160; &#160;After the threat of Covid-19, when it is save for people to contact with each other, Eatago will have the option of making Advanced group order. Eatago will timely shows how many people around you are viewing the foods of same store, and make it possible to make a group order with strangers nearby. In this case, we can save the delivery fee and make it more environmental to order foods since it only needs one drive to satisfy the need of many people, which saves oil and lessen the emission of Greenhouse gas. 
+### 5.Crawling Instantly
+&#160; &#160; &#160;&#160; Make it possible to crawl the datas instantly, preventing us from ordering foods that is not avaliable then. In this case, we can update our database everytime we open our website.
+
 
 ## Others: Why Eatago
 &#160; &#160; &#160; &#160;As a student of NCTU, the college that use Food Panda the most frequently, usually spend a lot of money on those platforms. Every time we will open two apps and compare the foods, which is really inconvenient to us. It is the inconvenience that inspires us to make Eatago.
