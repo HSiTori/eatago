@@ -98,15 +98,26 @@ def cart():
         put_table(lst)
         if f_flag and u_flag:
             if f_total < u_total:
-                put_text("Foodpanda 比較便宜")
+                put_link("Eatago 推薦你使用 Foodpanda (點我前往)", url=flink, new_window=True)
+                put_text("")
+                put_link("或是你堅持 Ubereats (點我前往)", url=ulink, new_window=True)
             elif f_total > u_total:
-                put_text("Ubereats 比較讚啦")
+                put_link("Eatago 推薦你使用 Ubereats (點我前往)", url=ulink, new_window=True)
+                put_text("")
+                put_link("或是你堅持 Foodpanda (點我前往)", url=flink, new_window=True)
             else:
                 put_text("兩個一樣 擇其所望")
+                put_link("前往 Foodpanda ", url=flink, new_window=True)
+                put_text("")
+                put_link("前往 Ubereats ", url=ulink, new_window=True)
         elif f_flag:
-            put_text("Ubereats 比較讚啦")
+            put_link("Eatago 推薦你使用 Ubereats (點我前往)", url=ulink, new_window=True)
+            put_text("")
+            put_link("或是你堅持 Foodpanda (點我前往)", url=flink, new_window=True)
         elif u_flag:
-            put_text("Foodpanda 比較便宜")
+            put_link("Eatago 推薦你使用 Foodpanda (點我前往)", url=flink, new_window=True)
+            put_text("")
+            put_link("或是你堅持 Ubereats (點我前往)", url=flink, new_window=True)
         else:
             if f_total < u_total:
                 put_link("Foodpanda 比較便宜 (點我前往) ", url=flink, new_window=True)
