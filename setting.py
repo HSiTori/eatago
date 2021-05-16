@@ -10,8 +10,7 @@ store_name = ""
 flink = ""
 ulink = ""
 #3
-User_Dict = {'Annie' : '1_3_yyt47e7sDQvCmsPbUfJd4byJFt8p3favwgQUTjHA'}
-Current_User = ""
+User_Dict = {'Annie' : '1_3_yyt47e7sDQvCmsPbUfJd4byJFt8p3favwgQUTjHA' , 'Anderson' : '1NmlieN4u9w0Eju1LFJq580U7BpHGZaLM_hBui26Rfa4'}
 
 def t(eng, chinese):
     return chinese if 'zh' in session_info.user_language else eng
